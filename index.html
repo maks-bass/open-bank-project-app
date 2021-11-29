@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: gap: https://code.jquery.com https://ssl.gstatic.com https://apisandbox.openbankproject.com 'unsafe-eval'; style-src 'self' code.jquery.com 'unsafe-inline'; media-src *; img-src 'self' code.jquery.com data: content:;">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <meta name="color-scheme" content="light dark">
+        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js" id="cordova-jquery"></script>
+        <script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <title>OpenBankio</title>
+    </head>
+    <body>
+        <div class="app">
+            <div id="deviceready">
+
+                <div data-role="page" id="page1">
+                    <section>
+                        <style> /* all this style section copied from a default cordova css file */
+                            section {
+                                background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
+                                position:absolute;             /* position in the center of the screen */
+                                left:50%;
+                                top:50%;
+                                height:50px;                   /* text area height */
+                                width:225px;                   /* text area width */
+                                text-align:center;
+                                padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
+                                margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
+                                /* offset horizontal: half of text area width */
+                            }
+                        </style>
+                        <button class="hide-page-loading-msg" data-theme="b" data-inline="true">OpenBankio</button>
+                    </section>
+                </div>
+
+                <div data-role="page" id="page2">
+				    <div data-role="header" data-position="fixed" data-theme="b">
+					    <h2>OpenBankio</h2>
+				    </div>
+                    
+                    <div data-role="main" class="ui-content">
+                        <h1>Ahoy 👋 there</h1>
+                        <h2>We are a 🆕 open 🏦 banking app for your everyday 💰 finances.</h2>
+                        <h3>You can 🔎 view your accounts and make money 💸 transfers with us on the go.</h3>
+                        <h4>Enter your details below and you are all set.</h4>
+                        <input id="uname" type="text" placeholder="Username"/>
+                        <input id="pwd" type="password" placeholder="Password"/>
+                        <button id="login-button">Login 🔑</button>
+                        <h2 id="indicator"></h2>
+                    </div>
+                </div>
+
+                <div data-role="page" id="page3">
+					<div data-role="header" data-position="fixed" data-theme="b">
+						<h2>OpenBankio</h2>
+                        <button id="logout-button3" class = "ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-btn-right ui-btn-b">Logout</button>
+					</div>
+
+					<div data-role="main" class="ui-content">
+                        <h2 id="querybankstext"></h1>
+                        <p>Please choose a 🏦 bank to 🔎 view available 📒 accounts.</p>
+                        <p></p>
+
+                            <form class ="ui-filterable">
+                                <input id ="filterBasic-input" data-type="search" placeholder="Search for your bank">
+                            </form>
+
+                        <p></p>
+
+                            <table data-role="table" class="table-stripe ui-responsive" data-filter="true" data-input="#filterBasic-input">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Short Name</th>
+                                        <th>ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablebody">
+                                </tbody>
+                            </table>
+                    </div>
+				</div>
+
+                <div data-role="page" id="page4">
+					<div data-role="header" data-position="fixed" data-theme="b">
+						<h2>OpenBankio</h2>
+                        <a href = "#page3" class = "ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back ui-btn-b">Back</a>
+                        <button id="logout-button4" class = "ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-btn-right ui-btn-b">Logout</button>
+					</div>
+
+					<div data-role="main" class="ui-content">
+                        <h2 id="pickedbanktext"></h2>
+                        <p>Please choose an 📒 account to transfer 💸 money and 🔎 view transactions.</p>
+                        <p></p>
+
+                        <table data-role="table" class="table-stripe ui-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Account</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablebody2">
+                            </tbody>
+                        </table>
+                    </div>
+				</div>
+
+                <div data-role="page" id="page5">
+					<div data-role="header" data-position="fixed" data-theme="b">
+						<h2>OpenBankio</h2>
+                        <a href = "#page4" class = "ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back ui-btn-b">Back</a>
+                        <button id="logout-button5" class = "ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-btn-right ui-btn-b">Logout</button>
+					</div>
+
+					<div data-role="main" class="ui-content">
+                        <h2 id="pickedaccounttext"></h2>
+
+                        <div class="ui-body ui-body-a ui-corner-all">
+                            <h4 id = "accountname"></h4>
+                            <h3 id = "accountbalance"></h3>
+                            <a href="#popupTransfer" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-transition="pop">Transfer 💸 money</a>
+                            <p id="querytransactionstext"></p>
+                                <div data-role="popup" id="popupTransfer" data-theme="a" class="ui-corner-all">
+                                    <form>
+                                        <div style="padding:10px 20px;">
+                                            <h3>Pay someone new</h3>
+                                            <label for="paym-bank">Bank 🆔</label>
+                                            <input type="text" id="paym-bank" placeholder="Bank ID" value="" data-theme="a">
+                                            <label for="paym-acc">Account 🆔</label>
+                                            <input type="text" id="paym-acc" placeholder="Account ID" value="" data-theme="a">
+                                            <label for="paym-amount">Amount of 💷:</label>
+                                            <input type="number" min="0.00" max="999.99" step="0.01" id="paym-amount" placeholder="Amount" value="" data-theme="a">
+                                            <label for="paym-ref">Reference 💬:</label>
+                                            <input type="text" id="paym-ref" placeholder="Reference" value="" data-theme="a">
+                                            <p></p>
+                                            <a href="#page5" data-rel="back" class="ui-btn ui-btn-inline ui-mini ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-delete">Cancel</a>
+                                            <button type="submit" id="submit-5" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Confirm</button>
+                                        </div>
+                                    </form>
+                                </div>
+                        </div>
+                        <h3>Latest transactions</h3>
+
+                        <table data-role="table" class="table-stripe ui-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>New Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablebody3">
+                            </tbody>
+                        </table>
+                    </div>
+				</div>
+            </div>
+        </div>
+        <script src="cordova.js"></script>
+        <script src="js/index.js"></script>
+    </body>
+</html>
